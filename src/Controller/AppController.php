@@ -18,7 +18,13 @@ class AppController extends AbstractController
         // Cette méthode correspond à une page, elle doit toujours retourner un objet Response
 
         // return new Response('Hello World');
+
+        $name = "David";
+
         // Retourner le rendu d'une vue Twig
-        return $this->render('app/homepage.html.twig');
+        // On envoie la valeur $name dans la vue
+        return $this->render('app/homepage.html.twig', [
+            'name' => $name,
+        ]);
     }
 }
