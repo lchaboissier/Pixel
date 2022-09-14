@@ -38,4 +38,101 @@ class Game
      * @ORM\Column(type="boolean")
      */
     private $enabled = false;
+
+
+    /**
+     * Get the value of id
+     *
+     * @return  int
+     */ 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param  int  $id
+     *
+     * @return  self
+     */ 
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of title
+     *
+     * @return  string
+     */ 
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @param  string  $title
+     *
+     * @return  self
+     */ 
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of description
+     *
+     * @return  null|string
+     */ 
+    public function getDescription(): null|string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @param  null|string  $description
+     *
+     * @return  self
+     */ 
+    public function setDescription($description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of enabled
+     *
+     * @return  bool
+     */ 
+    public function getEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set the value of enabled
+     *
+     * @param  bool  $enabled
+     *
+     * @return  self
+     */ 
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
 }
