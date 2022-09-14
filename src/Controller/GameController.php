@@ -23,6 +23,7 @@ class GameController extends AbstractController
     {
         return $this->render('game/admin.html.twig');
     }
+    
     /**
      * @Route("/new")
      * 
