@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ class Game
      * @var string
      * 
      * @ORM\Column(type="string", length=120)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -71,7 +73,7 @@ class Game
      */ 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->title ?? ''; // $this->title != null ? $this->title : ''
     }
 
     /**
