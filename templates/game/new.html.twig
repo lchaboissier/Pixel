@@ -1,6 +1,19 @@
-{% extends 'back_layout.html.twig' %}
+{% extends "back_layout.html.twig" %}
 
 {% block content %}
-<strong>Game created</strong>
+<h1>Nouveau jeu</h1>
 
+{{ form_start(form) }}
+<div class="card">
+    <div class="card-body">
+        {# Affiche le formulaire "form" #}
+        {{ form(form) }}
+    </div>
+
+    <div class="card-footer">
+        {# button:submit.btn.btn-primary #}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+</div>
+{{ form_end(form) }}
 {% endblock %}
