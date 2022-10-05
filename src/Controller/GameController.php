@@ -21,11 +21,19 @@ class GameController extends AbstractController
     /**
      * @Route("/admin")
      */
-    public function admin(GameRepository $GameRepository): Response
+    public function admin(GameRepository $GameRepository, Request $request): Response
     {
-        $entities = $GameRepository->findAll();
+        $p = $request->get('p', 1); // Page 1 par défaut
+        $itemCount = 5;
+        $search = $request->get('s', '');
+        $entities = $GameRepository->findData($itemCount, $p, $search);
+
+
+        $pageCount = ceil($entities->count() / $itemCount);
+
         return $this->render('game/admin.html.twig', [
-            'entities' => $entities
+            'entities' => $entities,
+            'pageCount' => max($pageCount, 1),
         ]);
     }
     
@@ -97,10 +105,18 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", requirements=("id": "\d+"))
+     * @Route("/{id}/delete", requirements={"id": "\d+"})
      */
     public function delete(EntityManagerInterface $em, Request $request, Game $entity): Response
     {
-        
+        if ($this->isCsrfTokenValid('delete_game_'.$entity->getId(), $request->get('token'))) {
+            $em->remove($entity);
+            $em->flush();
+
+            return $this->redirectToRoute('app_game_delete');
+        }
+        return $this->render('game/delete.html.twig', [
+            'entity' => $entity,
+        ]);
     }
 }

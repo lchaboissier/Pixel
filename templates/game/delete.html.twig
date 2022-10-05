@@ -1,0 +1,16 @@
+{% extends 'back_layout.html.twig' %}
+
+{% block content %}
+<h1>Supprimer un jeu</h1>
+
+<form action="" method="post">
+    <div class="alert">
+        Voulez-vous vraiment supprimer le jeu "{{ entity.title }}" ?
+    </div>
+    <a href="{{ path('app_game_admin') }}" class="btn btn-light">Non, annuler</a>
+    <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+
+    {# Génération d'un token pour plus de sécurité #}
+    <input type="hidden" name="token" value="{{ csrf_token('delete_game_' ~ entity.id)}}">
+</form>
+{% endblock %}
