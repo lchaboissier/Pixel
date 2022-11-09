@@ -1,0 +1,19 @@
+no: Non
+yes: Oui
+
+game:
+  title: Titre du jeu
+  title_help: Ecrivez le nom complet
+  editor: Éditeur du jeu
+  enabled: Activé
+  description: Description du jeu
+  new:
+    title: Ajouter un jeu
+    success: Le jeu "%title%" a bien été ajouté !
+  edit:
+    title: Modifier un jeu
+    success: Le jeu "%title%" a bien été modifié.
+  delete:
+    title: Supprimer un jeu
+    confirm: Voulez-vous vraiment supprimer le jeu "%title%" ?
+    success: Le jeu "%title%" a bien été supprimé.

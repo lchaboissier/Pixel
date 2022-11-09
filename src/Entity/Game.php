@@ -3,136 +3,91 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Repository\GameRepository;
+use Doctrine\DBAL\Types\Types;
 
-/**
- * @ORM\Entity
- */
-class Game
+#[ORM\Entity(repositoryClass: GameRepository::class)]
+class Game 
 {
-    /**
-     * @var int
-     * 
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+    #[ORM\Id]
+    #[ORM\GeneratedValue()]
+    #[ORM\Column]
+    private ?int $id;
+
+    #[ORM\Column(length: 120)]
+    #[Assert\NotBlank()]
+    private string $title;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description;
+
+    #[ORM\Column]
+    private bool $enabled = false;
+
+    /*
+     Annotation pour PHP < 8
+     @ORM\ManyToOne(targetEntity=Editor::class, inversedBy="games")
      */
-    private int $id;
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    private ?Editor $editor = null;
 
-    /**
-     * @var string
-     * 
-     * @ORM\Column(type="string", length=120)
-     */
-    private $title;
-
-    /**
-     * @var null|string
-     * 
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var bool
-     * 
-     * @ORM\Column(type="boolean")
-     */
-    private $enabled = false;
-
-
-    /**
-     * Get the value of id
-     *
-     * @return  int
-     */ 
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     * @param  int  $id
-     *
-     * @return  self
-     */ 
-    public function setId(int $id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of title
-     *
-     * @return  string
-     */ 
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->title ?? ''; // $this->title != null ? $this->title : ''
     }
 
-    /**
-     * Set the value of title
-     *
-     * @param  string  $title
-     *
-     * @return  self
-     */ 
-    public function setTitle(string $title): self
+    public function setTitle($title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * Get the value of description
-     *
-     * @return  null|string
-     */ 
-    public function getDescription(): null|string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * Set the value of description
-     *
-     * @param  null|string  $description
-     *
-     * @return  self
-     */ 
     public function setDescription($description): self
     {
-        $this->description = $description;
+        $this->description = strip_tags($description, ['div', 'p', 'strong', 'a']);
 
         return $this;
     }
 
-    /**
-     * Get the value of enabled
-     *
-     * @return  bool
-     */ 
     public function getEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * Set the value of enabled
-     *
-     * @param  bool  $enabled
-     *
-     * @return  self
-     */ 
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    public function getEditor(): ?Editor
+    {
+        return $this->editor;
+    }
+
+    public function setEditor(?Editor $editor): self
+    {
+        $this->editor = $editor;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->editor;
     }
 }

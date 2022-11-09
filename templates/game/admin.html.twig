@@ -1,6 +1,54 @@
-{% extends 'back_layout.html.twig' %}
+{% extends "back_layout.html.twig" %}
 
 {% block content %}
-    <h1>Liste des jeux</h1>
+<h1>{{ 'game.title'|trans }}</h1>
 
+<div class="card">
+    <div class="card-header">
+        <a href="{{ path('app_game_new') }}" class="btn btn-success">{{ 'game.new.title'|trans }}</a>
+    </div>
+
+    <div class="card-body">
+        <form action="" method="get" class="d-flex my-3">
+            <input type="text" name="s" class="form-control" value="{{ app.request.get("s") }}" placeholder="Rechercher...">
+            <button type="submit" class="btn btn-light ms-1">Rechercher</button>
+        </form>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                     <tr>
+                        <th>Titre</th>
+                        <th>Éditeur</th>
+                        <th>Description</th>
+                         <th>Activé</th>
+                         <th>Action</th>
+                      </tr>
+                 </thead>
+                <tbody>
+                    {% for entity in entities %}
+                     <tr>
+                        <td>{{entity.title}}</td>
+                        <td>{{entity.editor}}</td>
+                        <td>{{entity.Description}}</td>
+                        <td>{{entity.enabled ? 'oui':'non'}}</td>
+                        <td>
+                            <a href="{{ path('app_game_edit', {"id": entity.id}) }}" class="btn btn-light">Modifier</a>
+                            <a href="{{ path('app_game_delete', {"id": entity.id}) }}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>     
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-between align-items-center">
+            {# Inclus le fichier twig pagination et lui envoi la valeur de "route" #}
+            {% include "decorator/_pagination.html.twig" with {"route": "app_game_admin"} %}
+
+            <div class="mr-5">{{ entities.count }} jeux​ ​ ​ ​ ​ </div>
+        </div>
+    </div>
+</div>  
 {% endblock %}
