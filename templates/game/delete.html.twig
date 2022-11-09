@@ -5,7 +5,11 @@
 
 <form action="" method="post">
     <div class="alert">
+<<<<<<< HEAD
         {{ 'game.delete.confirm'|trans({'title': entity.title}) }}
+=======
+        Voulez-vous vraiment supprimer le jeu "{{ entity.title }}" ?
+>>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
     </div>
     <a href="{{ path('app_game_admin') }}" class="btn btn-light">Non, annuler</a>
     <button type="submit" class="btn btn-danger">Oui, supprimer</button>

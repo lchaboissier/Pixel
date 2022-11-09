@@ -1,11 +1,19 @@
 {% extends "back_layout.html.twig" %}
 
 {% block content %}
+<<<<<<< HEAD
 <h1>{{ 'game.title'|trans }}</h1>
 
 <div class="card">
     <div class="card-header">
         <a href="{{ path('app_game_new') }}" class="btn btn-success">{{ 'game.new.title'|trans }}</a>
+=======
+<h1>Liste de jeux</h1>
+
+<div class="card">
+    <div class="card-header">
+        <a href="{{ path('app_game_new') }}" class="btn btn-success">Ajouter un jeu</a>
+>>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
     </div>
 
     <div class="card-body">
@@ -18,7 +26,10 @@
                 <thead>
                      <tr>
                         <th>Titre</th>
+<<<<<<< HEAD
                         <th>Éditeur</th>
+=======
+>>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
                         <th>Description</th>
                          <th>Activé</th>
                          <th>Action</th>
@@ -28,7 +39,10 @@
                     {% for entity in entities %}
                      <tr>
                         <td>{{entity.title}}</td>
+<<<<<<< HEAD
                         <td>{{entity.editor}}</td>
+=======
+>>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
                         <td>{{entity.Description}}</td>
                         <td>{{entity.enabled ? 'oui':'non'}}</td>
                         <td>

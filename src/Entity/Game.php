@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+<<<<<<< HEAD
 use App\Repository\GameRepository;
 use Doctrine\DBAL\Types\Types;
+=======
+>>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game 
@@ -33,6 +36,37 @@ class Game
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Editor $editor = null;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @var string
+     * 
+     * @ORM\Column(type="string", length=120)
+     * @Assert\NotBlank()
+     */
+    private $title;
+
+    /**
+     * @var null|string
+     * 
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var bool
+     * 
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = false;
+
+
+    /**
+     * Get the value of id
+     *
+     * @return  int
+     */ 
+>>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
     public function getId(): int
     {
         return $this->id;
