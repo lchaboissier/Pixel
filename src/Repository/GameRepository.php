@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Repository;
 
@@ -11,6 +11,8 @@ class GameRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
+        // Game::class = 'App\Entity\Game'
+        
         parent::__construct($registry, Game::class);
     }
 
@@ -23,13 +25,13 @@ class GameRepository extends ServiceEntityRepository
             ->setFirstResult($begin)
         ;
 
-        if ($search !== "") { // S'il y a une requête
-            $qb->where("g.title LIKE :search") // Ici ":search" est une variable définie juste après
+        if ($search !== "") { // S'il y a une recherche
+            $qb->where("g.title LIKE :search") // Ici ":search" est un paramètre défini juste après
                 ->setParameter(':search', "%$search%")
             ;
-            }
+        }
 
-        // ENvoie la requête générée dans l'objet Paginator
+        // Envoie la requête générée dans l'objet Paginator
         return new Paginator($qb->getQuery());
     }
 }

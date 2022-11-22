@@ -5,6 +5,7 @@ game:
   title: Titre du jeu
   title_help: Ecrivez le nom complet
   editor: Éditeur du jeu
+  dateSortie: Date de sortie
   enabled: Activé
   description: Description du jeu
   new:

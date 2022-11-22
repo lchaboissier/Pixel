@@ -1,68 +1,61 @@
 {% extends "back_layout.html.twig" %}
 
 {% block content %}
-<<<<<<< HEAD
 <h1>{{ 'game.title'|trans }}</h1>
 
 <div class="card">
     <div class="card-header">
         <a href="{{ path('app_game_new') }}" class="btn btn-success">{{ 'game.new.title'|trans }}</a>
-=======
-<h1>Liste de jeux</h1>
-
-<div class="card">
-    <div class="card-header">
-        <a href="{{ path('app_game_new') }}" class="btn btn-success">Ajouter un jeu</a>
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
     </div>
 
     <div class="card-body">
         <form action="" method="get" class="d-flex my-3">
-            <input type="text" name="s" class="form-control" value="{{ app.request.get("s") }}" placeholder="Rechercher...">
+            <input type="text" name="s" class="form-control" value="{{ app.request.get("s") }}">
             <button type="submit" class="btn btn-light ms-1">Rechercher</button>
         </form>
         <div class="table-responsive">
             <table class="table">
                 <thead>
-                     <tr>
+                    <tr>
                         <th>Titre</th>
-<<<<<<< HEAD
-                        <th>Éditeur</th>
-=======
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
-                        <th>Description</th>
-                         <th>Activé</th>
-                         <th>Action</th>
-                      </tr>
-                 </thead>
+                        <th>Editeur</th>
+                        <th>Date de sortie</th>
+                        <th>Activé</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
                 <tbody>
-                    {% for entity in entities %}
-                     <tr>
-                        <td>{{entity.title}}</td>
-<<<<<<< HEAD
-                        <td>{{entity.editor}}</td>
-=======
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
-                        <td>{{entity.Description}}</td>
-                        <td>{{entity.enabled ? 'oui':'non'}}</td>
+                {% for entity in entities %}
+                    {# tr>td*3 #}
+                    <tr>
+                        <td>{{ entity.title }}</td>
+                        <td>{{ entity.editor }}</td>
+                        <td>{{ entity.dateSortie }}</td>
+                        <td class="text-white {{ entity.enabled ? 'bg-success':'bg-warning' }}">
+                            {{ entity.enabled ? 'Oui':'Non' }}
+                        </td>
                         <td>
                             <a href="{{ path('app_game_edit', {"id": entity.id}) }}" class="btn btn-light">Modifier</a>
-                            <a href="{{ path('app_game_delete', {"id": entity.id}) }}" class="btn btn-danger">Supprimer</a>
+
+                            <a href="{{ path('app_game_delete', {'id': entity.id}) }}" class="btn btn-danger">Supprimer</a>
                         </td>
                     </tr>
-                    {% endfor %}
+                {% endfor %}
                 </tbody>
             </table>
-        </div>     
+        </div>
     </div>
 
-    <div class="footer">
+    <div class="card-footer">
         <div class="d-flex justify-content-between align-items-center">
             {# Inclus le fichier twig pagination et lui envoi la valeur de "route" #}
             {% include "decorator/_pagination.html.twig" with {"route": "app_game_admin"} %}
 
-            <div class="mr-5">{{ entities.count }} jeux​ ​ ​ ​ ​ </div>
+            <div>{{ entities.count }} jeux</div>
         </div>
+        
     </div>
-</div>  
+</div>
+
 {% endblock %}

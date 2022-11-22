@@ -3,13 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Game;
-<<<<<<< HEAD
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-=======
-use Symfony\Component\Form\AbstractType;
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +15,6 @@ class GameType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-<<<<<<< HEAD
             ->add('title', null, [
                 'label' => 'game.title',
                 'help' => 'game.title_help'
@@ -39,6 +35,13 @@ class GameType extends AbstractType
                     'rows' => 10
                 ]
             ])
+            ->add('dateSortie',DateType::class,[
+                'label' => 'game.dateSortie',
+                'required' => true,
+                'widget' => 'choice',
+                'input'  => 'array',
+                'years' => range(1972,date("Y")),
+            ])
             ->add('enabled', ChoiceType::class, [
                 'label' => 'game.enabled',
                 'choices' => [
@@ -47,11 +50,6 @@ class GameType extends AbstractType
                 ],
                 'expanded' => true,
             ])
-=======
-            ->add('title')
-            ->add('description')
-            ->add('enabled')
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
         ;
     }
 

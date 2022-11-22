@@ -1,14 +1,14 @@
-<?php
+<?php 
 
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-<<<<<<< HEAD
 use App\Repository\GameRepository;
 use Doctrine\DBAL\Types\Types;
-=======
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinColumns;
+use Doctrine\ORM\Query\AST\Join;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game 
@@ -29,44 +29,16 @@ class Game
     private bool $enabled = false;
 
     /*
-     Annotation pour PHP < 8
-     @ORM\ManyToOne(targetEntity=Editor::class, inversedBy="games")
-     */
+    Annotation pour PHP < 8
+    @ORM\ManyToOne(targetEntity=Editor::class, inversedBy="games")
+    */
     #[ORM\ManyToOne(inversedBy: 'games')]
-    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(onDelete: "SET NULL")]
     private ?Editor $editor = null;
 
-<<<<<<< HEAD
-=======
-    /**
-     * @var string
-     * 
-     * @ORM\Column(type="string", length=120)
-     * @Assert\NotBlank()
-     */
-    private $title;
+    #[ORM\Column]
+    private int $dateSortie;
 
-    /**
-     * @var null|string
-     * 
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var bool
-     * 
-     * @ORM\Column(type="boolean")
-     */
-    private $enabled = false;
-
-
-    /**
-     * Get the value of id
-     *
-     * @return  int
-     */ 
->>>>>>> 44d67d710b70d073ebd1a02239dc4f8f02c8eea5
     public function getId(): int
     {
         return $this->id;
@@ -120,8 +92,15 @@ class Game
         return $this;
     }
 
-    public function __toString()
+    public function getDateSortie(): int
     {
-        return $this->editor;
+        return $this->dateSortie;
+    }
+
+    public function setDateSortie($dateSortie): self
+    {
+        $this->dateSortie = $dateSortie["year"];
+
+        return $this;
     }
 }
