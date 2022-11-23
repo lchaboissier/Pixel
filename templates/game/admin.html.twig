@@ -17,8 +17,9 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Image du jeu</th>
                         <th>Titre</th>
-                        <th>Editeur</th>
+                        <th>Éditeur</th>
                         <th>Date de sortie</th>
                         <th>Activé</th>
                         <th>Actions</th>
@@ -29,9 +30,14 @@
                 {% for entity in entities %}
                     {# tr>td*3 #}
                     <tr>
+                    <td>
+                    {% if entity.mainImage is not empty %}
+                    <img src="{{ asset(entity.mainImage.webPath) }}" alt="" width="200">
+                    {% endif %}
+                    </td>
                         <td>{{ entity.title }}</td>
                         <td>{{ entity.editor }}</td>
-                        <td>{{ entity.dateSortie }}</td>
+                        <td>{{ entity.dateSortie|date('d-m-Y') }}</td>
                         <td class="text-white {{ entity.enabled ? 'bg-success':'bg-warning' }}">
                             {{ entity.enabled ? 'Oui':'Non' }}
                         </td>

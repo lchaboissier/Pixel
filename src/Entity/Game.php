@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\GameRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinColumns;
@@ -37,7 +38,10 @@ class Game
     private ?Editor $editor = null;
 
     #[ORM\Column]
-    private int $dateSortie;
+    private \DateTime $dateSortie;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Image $mainImage = null;
 
     public function getId(): int
     {
@@ -92,14 +96,26 @@ class Game
         return $this;
     }
 
-    public function getDateSortie(): int
+    public function getDateSortie(): \DateTime
     {
         return $this->dateSortie;
     }
 
     public function setDateSortie($dateSortie): self
     {
-        $this->dateSortie = $dateSortie["year"];
+        $this->dateSortie = $dateSortie;
+
+        return $this;
+    }
+
+    public function getMainImage(): ?Image
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(?Image $mainImage): self
+    {
+        $this->mainImage = $mainImage;
 
         return $this;
     }

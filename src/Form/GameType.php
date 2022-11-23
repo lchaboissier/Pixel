@@ -39,7 +39,6 @@ class GameType extends AbstractType
                 'label' => 'game.dateSortie',
                 'required' => true,
                 'widget' => 'choice',
-                'input'  => 'array',
                 'years' => range(1972,date("Y")),
             ])
             ->add('enabled', ChoiceType::class, [
@@ -50,6 +49,7 @@ class GameType extends AbstractType
                 ],
                 'expanded' => true,
             ])
+            ->add('mainImage', ImageType::class)
         ;
     }
 
