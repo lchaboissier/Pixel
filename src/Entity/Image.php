@@ -26,7 +26,7 @@ class Image
     #[Assert\Image(maxSize: '3M')]
     private UploadedFile $file;
 
-    
+    // old file property ?
 
     public function getId(): ?int
     {
