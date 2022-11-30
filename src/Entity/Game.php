@@ -40,8 +40,11 @@ class Game
     #[ORM\Column]
     private \DateTime $dateSortie;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    // orphanRemoval: Supprimer automatiquement l'image si elle n'a plus de lien avec le jeu
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], orphanRemoval:true)]
     private ?Image $mainImage = null;
+
+    private bool $deleteMainImage;
 
     public function getId(): int
     {
@@ -115,7 +118,33 @@ class Game
 
     public function setMainImage(?Image $mainImage): self
     {
-        $this->mainImage = $mainImage;
+        if ($mainImage !== null && $mainImage->getPath() !== null) {
+            $this->mainImage = $mainImage;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of deleteMainImage
+     */ 
+    public function getDeleteMainImage(): bool
+    {
+        return $this->deleteMainImage ?? false;
+    }
+
+    /**
+     * Set the value of deleteMainImage
+     *
+     * @return  self
+     */ 
+    public function setDeleteMainImage(bool $deleteMainImage): self
+    {
+        $this->deleteMainImage = $deleteMainImage;
+
+        if ($this->deleteMainImage) {
+            $this->mainImage = null;
+        }
 
         return $this;
     }

@@ -8,6 +8,7 @@ game:
   dateSortie: Date de sortie
   enabled: Activé
   description: Description du jeu
+  delete_main_image: Suppression de l'image
   new:
     title: Ajouter un jeu
     success: Le jeu "%title%" a bien été ajouté !

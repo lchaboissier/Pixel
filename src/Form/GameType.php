@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Game;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,7 +50,14 @@ class GameType extends AbstractType
                 ],
                 'expanded' => true,
             ])
-            ->add('mainImage', ImageType::class)
+            ->add('mainImage', ImageType::class, [
+                'label' => 'game.main_image',
+            ])
+
+            ->add('deleteMainImage', CheckboxType::class, [
+                'label' => 'game.delete_main_image',
+                'required' => false
+            ])
         ;
     }
 

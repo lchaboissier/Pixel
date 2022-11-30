@@ -26,6 +26,8 @@ class Image
     #[Assert\Image(maxSize: '3M')]
     private UploadedFile $file;
 
+    private string $oldPath = "";
+
     // old file property ?
 
     public function getId(): ?int
@@ -65,7 +67,7 @@ class Image
     public function setFile(UploadedFile $file): self
     {
         $this->file = $file;
-        $this->oldPath = $this->path; // Sauvegarde le chemin de l'ancien fichier pour le supprimer lors de l'upload du nouveau
+        $this->oldPath = $this->path ?? ''; // Sauvegarde le chemin de l'ancien fichier pour le supprimer lors de l'upload du nouveau
         $this->path = ''; // Modifier cette valeur pour forcer Doctrine à modifier l'entité
 
         return $this;
@@ -116,5 +118,13 @@ class Image
     public function getWebPath(): string
     {
         return '/uploads/'. $this->path;
+    }
+
+    // Supprime le fichier avant de supprimer l'entité de la Database
+    #[ORM\PreRemove]
+    public function removeFile(): void {
+        if (is_file(self::getPublicRootDir().$this->path)) {
+            unlink(self::getPublicRootDir().$this->path);
+        }
     }
 }
