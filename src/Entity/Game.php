@@ -46,6 +46,9 @@ class Game
 
     private bool $deleteMainImage;
 
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    private ?User $author = null;
+
     public function getId(): int
     {
         return $this->id;
@@ -145,6 +148,18 @@ class Game
         if ($this->deleteMainImage) {
             $this->mainImage = null;
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?user
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?user $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

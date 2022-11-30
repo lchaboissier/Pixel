@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Game;
 use App\Form\GameType;
 use App\Repository\GameRepository;
+use App\Security\Voter\GameVoter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,16 +17,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Définie un prefix pour toutes les routes de ce controller
- * 
- * @Route("/game")
  */
+#[Route("/game")]
 class GameController extends AbstractController
 {
-    /**
-     * @Route("/admin")
-     */
+    #[Route("/admin")]
+    #[IsGranted("ROLE_USER")]
     public function admin(GameRepository $gameRepository, Request $request): Response
     {
+        $author = $this->getUser();
+        if ($this->isGranted('ROLE_ADMIN')) { // Affiche tous les jeux si l'user est admin
+            $author = null;
+        }
+
         $p = $request->get('p', 1); // Page 1 par défaut
         $itemCount = 20;
         $search = $request->get('s', '');
@@ -39,10 +44,10 @@ class GameController extends AbstractController
     }
 
     /**
-     * @Route("/new")
-     * 
      * On utilise l'injection de dépendance (Dependency Injection) pour obtenir un objet EntityManager
      */
+    #[Route("/new")]
+    #[IsGranted("ROLE_USER")]
     public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator): Response
     {
         // Créer une nouvelle entrée dans la table "game"
@@ -58,6 +63,7 @@ class GameController extends AbstractController
         //$em = $this->getDoctrine()->getManager();
 
         $entity = new Game;
+        $entity->setAuthor($this->getUser());
         // Crée un formulaire à partir de la classe "GameType" et envois l'entity en tant que données 
         $form = $this->createForm(GameType::class, $entity);
 
@@ -86,11 +92,18 @@ class GameController extends AbstractController
     /**
      * Route avec un paramètre "id", "\d+" indique que l'id est un nombre entier de 1 ou plusieurs chiffres
      * Grâce au "Param Converter", Sf va récupérer l'objet Game par rapport au paramètre id
-     * 
-     * @Route("/{id}/edit", requirements={"id": "\d+"})
      */
+    #[Route("/{id}/edit", requirements:["id" => "\d+"])]
+    #[IsGranted("ROLE_USER")]
     public function edit(EntityManagerInterface $em, Request $request, Game $entity, TranslatorInterface $translator): Response 
     {
+        // Crée une erreur si l'user n'a pas le droit de modifier le jeu
+        $this->denyAccessUnlessGranted(GameVoter::EDIT, $entity);
+        
+        if ($entity->getAuthor() === null)
+        {
+            $entity->setAuthor($this->getUser());
+        }
         $form = $this->createForm(GameType::class, $entity);
 
         $form->handleRequest($request);
@@ -111,9 +124,8 @@ class GameController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/delete", requirements={"id":"\d+"})
-     */
+    #[Route("/{id}/delete", requirements:["id" => "\d+"])]
+    #[IsGranted("ROLE_USER")]
     public function delete(EntityManagerInterface $em, Request $request, Game $entity, TranslatorInterface $translator): Response 
     {
         if ($this->isCsrfTokenValid('delete_game_'.$entity->getId(), $request->get('token'))) {
@@ -127,6 +139,16 @@ class GameController extends AbstractController
             return $this->redirectToRoute('app_game_admin');
         }
         return $this->render('game/delete.html.twig', [
+            'entity' => $entity,
+        ]);
+    }
+
+    #[Route("/{id}/show", requirements:["id" => "\d+"])]
+    public function show(Game $entity): Response
+    {
+        $this->denyAccessUnlessGranted(GameVoter::VIEW, $entity);
+
+        return $this->render('game/show.html.twig', [
             'entity' => $entity,
         ]);
     }
