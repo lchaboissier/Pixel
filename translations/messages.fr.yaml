@@ -2,6 +2,7 @@ no: Non
 yes: Oui
 
 game:
+  admin: Liste des jeux
   title: Titre du jeu
   title_help: Ecrivez le nom complet
   editor: Éditeur du jeu

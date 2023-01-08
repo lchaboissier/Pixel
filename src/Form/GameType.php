@@ -42,6 +42,9 @@ class GameType extends AbstractType
                 'widget' => 'choice',
                 'years' => range(1972,date("Y")),
             ])
+            ->add('support', null,[
+                'label' => 'Support de jeu',
+            ])
             ->add('enabled', ChoiceType::class, [
                 'label' => 'game.enabled',
                 'choices' => [
@@ -51,11 +54,11 @@ class GameType extends AbstractType
                 'expanded' => true,
             ])
             ->add('mainImage', ImageType::class, [
-                'label' => 'game.main_image',
+                'label' => 'Image du jeu',
             ])
 
             ->add('deleteMainImage', CheckboxType::class, [
-                'label' => 'game.delete_main_image',
+                'label' => 'Supprimer l\'image',
                 'required' => false
             ])
         ;

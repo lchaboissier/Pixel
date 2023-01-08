@@ -1,6 +1,6 @@
 {% extends 'back_layout.html.twig' %}
 
-{% block title %}Editor index{% endblock %}
+{% block title %}Liste d'éditeurs{% endblock %}
 
 {% block content %}
     <h1>Editor index</h1>
@@ -19,8 +19,8 @@
                 <td>{{ editor.id }}</td>
                 <td>{{ editor.name }}</td>
                 <td>
-                    <a href="{{ path('app_editor_show', {'id': editor.id}) }}">show</a>
-                    <a href="{{ path('app_editor_edit', {'id': editor.id}) }}">edit</a>
+                    <a href="{{ path('app_editor_show', {'id': editor.id}) }}" class="btn btn-success">show</a>
+                    <a href="{{ path('app_editor_edit', {'id': editor.id}) }}" class="btn btn-light">edit</a>
                 </td>
             </tr>
         {% else %}

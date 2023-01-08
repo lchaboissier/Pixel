@@ -1,7 +1,7 @@
-{% extends "back_layout.html.twig" %}
+{% extends 'back_layout.html.twig' %}
 
 {% block content %}
-<h1>Modifier le jeu "{{ entity.title }}"</h1>
+<h1>Modifier le support "{{ support.nom }}"</h1>
 
 {{ form_start(form) }}
 {{ form_errors(form) }}
@@ -10,19 +10,15 @@
         {# {{ form_widget(form) }} #}
         <div class="row">
             <div class="col-md-8">
-                {{ form_row(form.title) }}
+                {{ form_row(form.nom) }}
                 {{ form_row(form.dateSortie) }}
                 {{ form_row(form.description) }}
-            </div>
-            <div class="col-md-4">
-                {{ form_row(form.enabled) }}
-                {{ form_row(form.editor) }}
-                {{ form_row(form.support) }}
+                {{ form_row(form.constructeur) }}
             </div>
 
             <div class="d-flex-justify-content-between">
-                {% if entity.mainImage is not empty %}
-                <img src="{{ asset(entity.mainImage.webPath) }}" alt="" width="200">
+                {% if support.mainImage is not empty %}
+                <img src="{{ asset(support.mainImage.webPath) }}" alt="" width="200">
                 {% endif %}
             </div>
 
@@ -35,6 +31,7 @@
     </div>
 
     <div class="card-footer">
+        <a class="btn btn-primary" href="{{ path('app_support_index') }}">Annuler</a>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
     </div>
 </div>
