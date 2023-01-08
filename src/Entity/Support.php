@@ -37,6 +37,9 @@ class Support
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'support')]
     private Collection $games;
 
+    #[ORM\ManyToOne(inversedBy: 'supports')]
+    private ?User $Author = null;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -163,5 +166,17 @@ class Support
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->Author;
+    }
+
+    public function setAuthor(?User $Author): self
+    {
+        $this->Author = $Author;
+
+        return $this;
     }
 }

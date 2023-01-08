@@ -1,7 +1,9 @@
 {% extends "back_layout.html.twig" %}
 
+{% block title %}Détail du jeu{% endblock %}
+
 {% block content %}
-<h1>Nouveau jeu "{{ entity.title }}"</h1>
+<h1>Détail du jeu "{{ entity.title }}"</h1>
 
 {{ form_start(form) }} {# Début du formulaire #}
 {{ form_errors(form) }}

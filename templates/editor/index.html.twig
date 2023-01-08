@@ -3,14 +3,14 @@
 {% block title %}Liste d'éditeurs{% endblock %}
 
 {% block content %}
-    <h1>Editor index</h1>
-
+    <h1>Liste des éditeurs</h1>
+    <a href="{{ path('app_editor_new') }}" class="btn btn-success">Créer un nouvel éditeur</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Nom</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,17 +19,17 @@
                 <td>{{ editor.id }}</td>
                 <td>{{ editor.name }}</td>
                 <td>
-                    <a href="{{ path('app_editor_show', {'id': editor.id}) }}" class="btn btn-success">show</a>
-                    <a href="{{ path('app_editor_edit', {'id': editor.id}) }}" class="btn btn-light">edit</a>
+                    <a href="{{ path('app_editor_show', {'id': editor.id}) }}" class="btn btn-success">Consulter</a>
+                    <a href="{{ path('app_editor_edit', {'id': editor.id}) }}" class="btn btn-light">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun résultat trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_editor_new') }}">Create new</a>
+    
 {% endblock %}

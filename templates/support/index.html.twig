@@ -3,11 +3,8 @@
 {% block title %}Liste des supports{% endblock %}
 
 {% block content %}
-    <h1>Support index</h1>
-    <form action="" method="get" class="d-flex my-3">
-        <input type="text" name="s" class="form-control" value="{{ app.request.get("s") }}">
-        <button type="submit" class="btn btn-light ms-1">Rechercher</button>
-    </form>
+    <h1>Liste des supports</h1>
+    <a href="{{ path('app_support_new') }}" class="btn btn-success">Créer un nouveau support</a>
     <table class="table">
         <thead>
             <tr>
@@ -15,7 +12,7 @@
                 <th>Nom</th>
                 <th>Date de sortie</th>
                 <th>Constructeur</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -30,17 +27,15 @@
                 <td>{{ support.dateSortie|date('d-m-Y') }}</td>
                 <td>{{ support.constructeur }}</td>
                 <td>
-                    <a href="{{ path('app_support_show', {'id': support.id}) }}" class="btn btn-success">show</a>
-                    <a href="{{ path('app_support_edit', {'id': support.id}) }}" class="btn btn-light">edit</a>
+                    <a href="{{ path('app_support_show', {'id': support.id}) }}" class="btn btn-success">Consulter</a>
+                    <a href="{{ path('app_support_edit', {'id': support.id}) }}" class="btn btn-light">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun résultat trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_support_new') }}">Create new</a>
 {% endblock %}
