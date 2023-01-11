@@ -1,10 +1,16 @@
 {% extends "back_layout.html.twig" %}
 
+{% block title %}Liste des jeux{% endblock %}
+
 {% block content %}
 <h1>{{ 'game.admin'|trans }}</h1>
 
 <div class="card">
     <div class="card-header">
+        <a href="{{ path('app_game_admin') }}" class="btn btn-primary">Liste des jeux</a>
+        <a href="{{ path('app_editor_index') }}" class="btn btn-primary">Liste des éditeurs</a>
+        <a href="{{ path('app_support_index') }}" class="btn btn-primary">Liste des supports</a>
+        <br><br>
         <a href="{{ path('app_game_new') }}" class="btn btn-success">{{ 'game.new.title'|trans }}</a>
     </div>
 
@@ -63,10 +69,8 @@
         <div class="d-flex justify-content-between align-items-center">
             {# Inclus le fichier twig pagination et lui envoi la valeur de "route" #}
             {% include "decorator/_pagination.html.twig" with {"route": "app_game_admin"} %}
-
             <div>{{ entities.count }} jeux</div>
         </div>
-        
     </div>
 </div>
 

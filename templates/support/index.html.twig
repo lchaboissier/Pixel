@@ -3,39 +3,65 @@
 {% block title %}Liste des supports{% endblock %}
 
 {% block content %}
-    <h1>Liste des supports</h1>
-    <a href="{{ path('app_support_new') }}" class="btn btn-success">Créer un nouveau support</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Image du support</th>
-                <th>Nom</th>
-                <th>Date de sortie</th>
-                <th>Constructeur</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for support in supports %}
-            <tr>
-                <td>
-                    {% if support.mainImage is not empty %}
-                    <img src="{{ asset(support.mainImage.webPath) }}" alt="" width="200">
-                    {% endif %}
-                </td>
-                <td>{{ support.nom }}</td>
-                <td>{{ support.dateSortie|date('d-m-Y') }}</td>
-                <td>{{ support.constructeur }}</td>
-                <td>
-                    <a href="{{ path('app_support_show', {'id': support.id}) }}" class="btn btn-success">Consulter</a>
-                    <a href="{{ path('app_support_edit', {'id': support.id}) }}" class="btn btn-light">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Aucun résultat trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<h1>Liste des supports</h1>
+
+<div class="card">
+    <div class="card-header">
+        <a href="{{ path('app_game_admin') }}" class="btn btn-primary">Liste des jeux</a>
+        <a href="{{ path('app_editor_index') }}" class="btn btn-primary">Liste des éditeurs</a>
+        <a href="{{ path('app_support_index') }}" class="btn btn-primary">Liste des supports</a>
+        <br><br>
+        <a href="{{ path('app_support_new') }}" class="btn btn-success">Créer un nouveau support</a>
+    </div>
+
+    <div class="card-body">
+        <form action="" method="get" class="d-flex my-3">
+            <input type="text" name="s" class="form-control" value="{{ app.request.get("s") }}">
+            <button type="submit" class="btn btn-light ms-1">Rechercher</button>
+        </form>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Image du support</th>
+                        <th>Nom</th>
+                        <th>Date de sortie</th>
+                        <th>Constructeur</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for support in supports %}
+                    <tr>
+                        <td>
+                            {% if support.mainImage is not empty %}
+                            <img src="{{ asset(support.mainImage.webPath) }}" alt="" width="200">
+                            {% endif %}
+                        </td>
+                        <td>{{ support.nom }}</td>
+                        <td>{{ support.dateSortie|date('d-m-Y') }}</td>
+                        <td>{{ support.constructeur }}</td>
+                        <td>
+                            <a href="{{ path('app_support_show', {'id': support.id}) }}" class="btn btn-success">Consulter</a>
+                            <a href="{{ path('app_support_edit', {'id': support.id}) }}" class="btn btn-light">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun résultat trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="d-flex justify-content-between align-items-center">
+            {# Inclus le fichier twig pagination et lui envoi la valeur de "route" #}
+            {% include "decorator/_pagination.html.twig" with {"route": "app_game_admin"} %}
+            <div>{{ supports.count }} supports</div>
+        </div>
+    </div>
+    
 {% endblock %}

@@ -25,6 +25,11 @@ class Editor
     #[ORM\OneToMany(mappedBy: 'constructeur', targetEntity: Support::class)]
     private Collection $supports;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], orphanRemoval:true)]
+    private ?Image $mainImage = null;
+
+    private bool $deleteMainImage;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -108,6 +113,44 @@ class Editor
             if ($support->getConstructeur() === $this) {
                 $support->setConstructeur(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getMainImage(): ?Image
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(?Image $mainImage): self
+    {
+        if ($mainImage !== null && $mainImage->getPath() !== null) {
+            $this->mainImage = $mainImage;
+        }
+
+        return $this;
+    }
+    
+    /**
+     * Get the value of deleteMainImage
+     */ 
+    public function getDeleteMainImage(): bool
+    {
+        return $this->deleteMainImage ?? false;
+    }
+
+    /**
+     * Set the value of deleteMainImage
+     *
+     * @return  self
+     */ 
+    public function setDeleteMainImage(bool $deleteMainImage): self
+    {
+        $this->deleteMainImage = $deleteMainImage;
+
+        if ($this->deleteMainImage) {
+            $this->mainImage = null;
         }
 
         return $this;

@@ -18,15 +18,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SupportController extends AbstractController
 {
     #[Route('/', name: 'app_support_index', methods: ['GET'])]
-    public function index(SupportRepository $supportRepository): Response
+    public function index(SupportRepository $supportRepository, Request $request): Response
     {
         $author = $this->getUser();
         if ($this->isGranted('ROLE_ADMIN')) { // Affiche tous les jeux si l'user est admin
             $author = null;
         }
 
+        $p = $request->get('p', 1); // Page 1 par défaut
+        $itemCount = 20;
+        $search = $request->get('s', '');
+        $supports = $supportRepository->findData($itemCount, $p, $search);
+
+        $pageCount = ceil($supports->count() / $itemCount);
+
         return $this->render('support/index.html.twig', [
-            'supports' => $supportRepository->findAll(),
+            // 'supports' => $supportRepository->findAll(),
+            'supports' => $supports,
+            'pageCount' => max($pageCount, 1),
         ]);
     }
 

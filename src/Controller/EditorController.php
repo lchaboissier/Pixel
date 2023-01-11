@@ -14,10 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class EditorController extends AbstractController
 {
     #[Route('/', name: 'app_editor_index', methods: ['GET'])]
-    public function index(EditorRepository $editorRepository): Response
+    public function index(EditorRepository $editorRepository, Request $request): Response
     {
+        $p = $request->get('p', 1); // Page 1 par défaut
+        $itemCount = 20;
+        $search = $request->get('s', '');
+        $editors = $editorRepository->findData($itemCount, $p, $search);
+
+        $pageCount = ceil($editors->count() / $itemCount);
+
         return $this->render('editor/index.html.twig', [
-            'editors' => $editorRepository->findAll(),
+            // 'editors' => $editorRepository->findAll(),
+            'editors' => $editors,
+            'pageCount' => max($pageCount, 1),
         ]);
     }
 

@@ -39,7 +39,7 @@ class GameType extends AbstractType
             ->add('dateSortie',DateType::class,[
                 'label' => 'game.dateSortie',
                 'required' => true,
-                'widget' => 'choice',
+                'widget' => 'single_text',
                 'years' => range(1972,date("Y")),
             ])
             ->add('support', null,[

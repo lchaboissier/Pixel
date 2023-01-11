@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Modification de l'éditeur "{{ editor.name }}"</h1>
-
+    
     {{ include('editor/_form.html.twig', {'button_label': 'Modifier'}) }}
 
     <a href="{{ path('app_editor_index') }}" class="btn btn-primary">Annuler</a>

@@ -3,33 +3,62 @@
 {% block title %}Liste d'éditeurs{% endblock %}
 
 {% block content %}
-    <h1>Liste des éditeurs</h1>
-    <a href="{{ path('app_editor_new') }}" class="btn btn-success">Créer un nouvel éditeur</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for editor in editors %}
-            <tr>
-                <td>{{ editor.id }}</td>
-                <td>{{ editor.name }}</td>
-                <td>
-                    <a href="{{ path('app_editor_show', {'id': editor.id}) }}" class="btn btn-success">Consulter</a>
-                    <a href="{{ path('app_editor_edit', {'id': editor.id}) }}" class="btn btn-light">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Aucun résultat trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<h1>Liste des éditeurs</h1>
 
+<div class="card">
+    <div class="card-header">
+        <a href="{{ path('app_game_admin') }}" class="btn btn-primary">Liste des jeux</a>
+        <a href="{{ path('app_editor_index') }}" class="btn btn-primary">Liste des éditeurs</a>
+        <a href="{{ path('app_support_index') }}" class="btn btn-primary">Liste des supports</a>
+        <br><br>
+        <a href="{{ path('app_editor_new') }}" class="btn btn-success">Créer un nouvel éditeur</a>
+    </div>
+
+    <div class="card-body">
+        <form action="" method="get" class="d-flex my-3">
+            <input type="text" name="s" class="form-control" value="{{ app.request.get("s") }}">
+            <button type="submit" class="btn btn-light ms-1">Rechercher</button>
+        </form>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Image de l'éditeur</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for editor in editors %}
+                    <tr>
+                        <td>
+                        {% if editor.mainImage is not empty %}
+                            <img src="{{ asset(editor.mainImage.webPath) }}" alt="" width="200">
+                        {% endif %}
+                        </td>
+                        <td>{{ editor.name }}</td>
+                        <td>
+                            <a href="{{ path('app_editor_show', {'id': editor.id}) }}" class="btn btn-success">Consulter</a>
+                            <a href="{{ path('app_editor_edit', {'id': editor.id}) }}" class="btn btn-light">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun résultat trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="d-flex justify-content-between align-items-center">
+            {# Inclus le fichier twig pagination et lui envoi la valeur de "route" #}
+            {% include "decorator/_pagination.html.twig" with {"route": "app_editor_index"} %}
+            <div>{{ editors.count }} éditeurs</div>
+        </div>
+    </div>
+</div>
     
 {% endblock %}
