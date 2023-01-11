@@ -7,6 +7,10 @@
 {% block body %}
     <header id="main-header">
         <div class="display-6">Pixel</div>
+        {{ knp_menu_render('main', {style: 'horizontal'}) }}
+        <div class="ms-auto">
+        {{ knp_menu_render('user', {style: 'horizontal'}) }}
+        </div>
     </header>
 
     <div id="app">

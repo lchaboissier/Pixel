@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Address\AdressApiInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,5 +28,14 @@ class AppController extends AbstractController
         return $this->render('app/homepage.html.twig', [
             'name' => $name,
         ]);
+    }
+
+    #[Route('/address')]
+    public function address(Request $request, AddressApiInterface $addressApi): JsonResponse
+    {
+        $search = $request->get('search', '');
+        $result = $addressApi->searchAddress($search);
+
+        return new JsonResponse($result);
     }
 }

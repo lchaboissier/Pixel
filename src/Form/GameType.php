@@ -45,14 +45,6 @@ class GameType extends AbstractType
             ->add('support', null,[
                 'label' => 'Support de jeu',
             ])
-            ->add('enabled', ChoiceType::class, [
-                'label' => 'game.enabled',
-                'choices' => [
-                    'no' => false,
-                    'yes' => true,
-                ],
-                'expanded' => true,
-            ])
             ->add('mainImage', ImageType::class, [
                 'label' => 'Image du jeu',
             ])
@@ -62,6 +54,17 @@ class GameType extends AbstractType
                 'required' => false
             ])
         ;
+
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            $builder->add('enabled', ChoiceType::class, [
+                'label' => 'game.enabled',
+                'choices' => [
+                    'no' => false,
+                    'yes' => true,
+                ],
+                'expanded' => true,
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

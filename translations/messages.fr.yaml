@@ -2,6 +2,7 @@ no: Non
 yes: Oui
 
 game:
+  games: Liste des jeux
   admin: Liste des jeux
   title: Titre du jeu
   title_help: Ecrivez le nom complet
@@ -21,3 +22,14 @@ game:
     title: Supprimer un jeu
     confirm: Voulez-vous vraiment supprimer le jeu "%title%" ?
     success: Le jeu "%title%" a bien été supprimé.
+
+security:
+  login: Se connecter
+  logout: Se déconnecter
+  register: S'inscrire
+
+editor:
+  editors: Liste des éditeurs
+
+support:
+  supports: Liste des supports
