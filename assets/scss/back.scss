@@ -4,4 +4,25 @@ $success: #18ad8a;
 
 @import './common.scss';
 
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: url('../fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
 @import '../../node_modules/bootswatch/dist/vapor/bootswatch';
+
+body {
+    font-family: 'Montserrat-Regular';
+}
+
+.admin-menu {
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    .nav {
+        .nav-item {
+            .nav-link {
+                color: #eee;
+            }
+        }
+    }
+}

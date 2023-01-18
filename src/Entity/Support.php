@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: SupportRepository::class)]
 class Support
@@ -35,9 +36,11 @@ class Support
     private bool $deleteMainImage;
 
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'support')]
+    #[Ignore]
     private Collection $games;
 
     #[ORM\ManyToOne(inversedBy: 'supports')]
+    #[Ignore]
     private ?User $Author = null;
 
     public function __construct()
@@ -163,7 +166,7 @@ class Support
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->nom;
     }

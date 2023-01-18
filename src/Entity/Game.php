@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\GameRepository;
-use DateTime;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinColumns;
-use Doctrine\ORM\Query\AST\Join;
+// use Doctrine\ORM\Mapping\JoinColumn;
+// use Doctrine\ORM\Mapping\JoinColumns;
+// use Doctrine\ORM\Query\AST\Join;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game 
@@ -49,6 +49,7 @@ class Game
     private bool $deleteMainImage;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[Ignore]
     private ?User $author = null;
 
     #[ORM\ManyToMany(targetEntity: Support::class, inversedBy: 'games')]

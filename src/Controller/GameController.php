@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,7 +49,7 @@ class GameController extends AbstractController
      */
     #[Route("/new")]
     #[IsGranted("ROLE_USER")]
-    public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator): Response
+    public function new(EntityManagerInterface $em, Request $request, TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher): Response
     {
         // Créer une nouvelle entrée dans la table "game"
         // $newGame = new Game;

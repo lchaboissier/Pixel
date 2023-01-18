@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cette adresse e-mail.')]
@@ -20,6 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Ignore]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -29,18 +31,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Ignore]
     private ?string $password = null;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Game::class)]
+    #[Ignore]
     private Collection $games;
 
     #[ORM\OneToMany(mappedBy: 'Author', targetEntity: Support::class)]
+    #[Ignore]
     private Collection $supports;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Login::class)]
+    private Collection $logins;
 
     public function __construct()
     {
         $this->games = new ArrayCollection();
         $this->supports = new ArrayCollection();
+        $this->logins = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,6 +181,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($support->getAuthor() === $this) {
                 $support->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Login>
+     */
+    public function getLogins(): Collection
+    {
+        return $this->logins;
+    }
+
+    public function addLogin(Login $login): self
+    {
+        if (!$this->logins->contains($login)) {
+            $this->logins->add($login);
+            $login->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogin(Login $login): self
+    {
+        if ($this->logins->removeElement($login)) {
+            // set the owning side to null (unless already changed)
+            if ($login->getUser() === $this) {
+                $login->setUser(null);
             }
         }
 

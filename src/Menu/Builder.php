@@ -6,7 +6,7 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Component\Security\Core\Security;
 
-final class Builder
+class Builder
 {
     public function __construct(private FactoryInterface $factory, private Security $security)
     {
