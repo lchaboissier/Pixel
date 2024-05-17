@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route("/game")]
 class GameController extends AbstractController
 {
-    #[Route("/admin")]
+    #[Route(path: "/admin", name: 'app_game_admin')]
     #[IsGranted("ROLE_USER")]
     public function admin(GameRepository $gameRepository, Request $request): Response
     {
@@ -87,6 +87,7 @@ class GameController extends AbstractController
 
         return $this->render('game/new.html.twig', [
             'form' => $form->createView(), // Créé la vue du formulaire
+            // 'entity' => $entity,
         ]);
     }
 

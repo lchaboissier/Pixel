@@ -13,10 +13,10 @@ game:
   delete_main_image: Suppression de l'image
   registration.register: Créer un compte
   new:
-    title: Ajouter un jeu
+    title: .icon-plus Ajouter un jeu
     success: Le jeu "%title%" a bien été ajouté !
   edit:
-    title: Modifier un jeu
+    title: .icon-pencil Modifier un jeu
     success: Le jeu "%title%" a bien été modifié.
   delete:
     title: Supprimer un jeu
@@ -30,6 +30,12 @@ security:
 
 editor:
   editors: Liste des éditeurs
+  mainImage: Image de l'éditeur
 
 support:
   supports: Liste des supports
+  nom: Nom du support 
+  dateSortie: Date de sortie
+  description: Description du support
+  constructor: Constructeur du support
+  mainImage: Image du support

@@ -1,15 +1,14 @@
-<?php
+<?php 
 
 namespace App\EventSubscriber;
 
+use App\Entity\Login;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\AuthenticationEvents;
 use Symfony\Component\Security\Core\Event\AuthenticationEvent;
-use Symfony\Contracts\EventDispatcher\Event;
-use App\Entity\Login;
-use Doctrine\ORM\EntityManagerInterface;
 
-class LoginSubscriber extends Event
+class LoginSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {
@@ -19,22 +18,20 @@ class LoginSubscriber extends Event
         ];
     }
 
-    public function __construct(private EntityManagerInterface $em)
-    {
-        
-    }
+    public function __construct(private EntityManagerInterface $em) 
+    {}
 
-    public function onAuthenticationSuccess(AuthenticationEvent $event): void
+    public function onAuthenticationSuccess(AuthenticationEvent $event): void 
     {
+        // Récupére l'utilisateur qui vient de se connecter
         $user = $event->getAuthenticationToken()->getUser();
 
         $login = (new Login)
             ->setUser($user)
             ->setDate(new \DateTime())
-            ;
+        ;
 
         $this->em->persist($login);
         $this->em->flush();
     }
-
 }

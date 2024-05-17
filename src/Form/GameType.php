@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use App\Form\WysiwygType;
 
 class GameType extends AbstractType
 {
@@ -36,7 +37,7 @@ class GameType extends AbstractType
                     ;
                 }
             ])
-            ->add('description', null, [
+            ->add('description', WysiwygType::class, [
                 'label' => 'game.description',
                 'attr' => [
                     'rows' => 10

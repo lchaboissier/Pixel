@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -13,9 +14,11 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
     #[Route('/game.{_format}', defaults:['_format' => 'json'])]
-    public function game(GameRepository $gameRepository, SerializerInterface $serializer, string $_format): Response
+    public function game(GameRepository $gameRepository, SerializerInterface $serializer, string $_format, Request $request): Response
     {
-        $entities = $gameRepository->findData();
+        $search = $request->get('s', '');
+
+        $entities = $gameRepository->findData(search: $search);
 
         /*foreach ($entities as $entity) {
             var_dump(serialize($entity));

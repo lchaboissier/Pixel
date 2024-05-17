@@ -2,7 +2,9 @@
 
 {% block content %}
 {% if is_granted('ROLE_USER') %}
-    <strong>Hello {{ app.user.userIdentifier }}</strong>
+    <strong>Bienvenue {{ app.user.userIdentifier }} !</strong>
+    <br>
+    <a href="{{ path('app_game_admin') }}" class="btn btn-primary">Jeux</a>
 {% else %}
     <a href="{{ path('app_login') }}" class="btn btn-primary">Identifiez-vous</a>
     <a href="{{ path('app_register') }}" class="btn btn-primary">Inscrivez-vous</a>
